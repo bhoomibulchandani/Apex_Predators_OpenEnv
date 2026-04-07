@@ -1,0 +1,12 @@
+name,age,salary,department,experience,performance_score
+John Doe,12,50000,Sales,2,
+Jane Smith,,60000,Marketing,,92
+Bob Johnson,30,,Engineering,5,78
+Alice Brown,28,55000,Sales,3,88
+Charlie Wilson,35,70000,Marketing,8,91
+Diana Miller,,65000,Engineering,,86
+Eve Davis,42,80000,Sales,15,94
+Frank Thomas,31,,Marketing,4,89
+Grace Lee,,58000,Engineering,2,
+Henry Clark,36,72000,Sales,7,87
+Bob Johnson,30,,Engineering,5,78
