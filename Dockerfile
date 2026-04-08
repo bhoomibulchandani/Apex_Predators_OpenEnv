@@ -4,7 +4,7 @@ FROM python:3.11-slim
 # Set working directory
 WORKDIR /app
 
-# Set environment variables
+# Set environment variables for Gradio
 ENV PYTHONUNBUFFERED=1 \
     PYTHONDONTWRITEBYTECODE=1 \
     GRADIO_SERVER_NAME="0.0.0.0" \
@@ -17,17 +17,14 @@ RUN apt-get update && apt-get install -y \
     curl \
     && rm -rf /var/lib/apt/lists/*
 
-# Copy requirements file first (for better caching)
+# Copy requirements file first
 COPY requirements.txt .
 
-# Install Python dependencies (using the working versions from your setup)
-RUN pip install --no-cache-dir gradio pandas numpy
+# CRITICAL FIX: Install UI dependencies AND your Backend dependencies!
+RUN pip install --no-cache-dir gradio pandas numpy scikit-learn pydantic openai
 
-# Copy application files
-COPY ui.py .
-
-# Create directory for temporary files
-RUN mkdir -p /app/temp
+# CRITICAL FIX: Copy the ENTIRE repository (so Meta can see inference.py)
+COPY . .
 
 # Expose the port Gradio will run on
 EXPOSE 7860
@@ -36,5 +33,5 @@ EXPOSE 7860
 HEALTHCHECK --interval=30s --timeout=10s --start-period=5s --retries=3 \
     CMD curl -f http://localhost:7860/ || exit 1
 
-# Run the application
-CMD ["python", "ui.py"]
+# Run the UI application
+CMD ["python", "server/ui.py"]
