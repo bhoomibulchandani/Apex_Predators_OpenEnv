@@ -25,7 +25,7 @@ RUN pip install --no-cache-dir gradio pandas numpy scikit-learn pydantic openai
 
 # CRITICAL FIX: Copy the ENTIRE repository (so Meta can see inference.py)
 COPY . .
-
+RUN pip install --no-cache-dir openenv-core fastapi uvicorn
 # Expose the port Gradio will run on
 EXPOSE 7860
 
@@ -33,5 +33,5 @@ EXPOSE 7860
 HEALTHCHECK --interval=30s --timeout=10s --start-period=5s --retries=3 \
     CMD curl -f http://localhost:7860/ || exit 1
 
-# Run the UI application
-CMD ["python", "server/ui.py"]
+
+CMD ["python", "server/api.py"]

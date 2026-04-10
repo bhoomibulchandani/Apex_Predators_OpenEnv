@@ -1,0 +1,7 @@
+name: apex-data-cleaner
+version: "1.0.0"
+description: "Data cleaning environment for OpenEnv Hackathon"
+tasks:
+  - id: task_easy
+  - id: task_medium
+  - id: task_hard

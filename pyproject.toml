@@ -1,0 +1,18 @@
+[build-system]
+requires = ["setuptools>=61.0"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "apex-data-cleaner"
+version = "1.0.0"
+description = "Data cleaning environment for OpenEnv Hackathon"
+dependencies = [
+    "pandas", 
+    "pydantic", 
+    "fastapi", 
+    "uvicorn",
+    "openenv-core>=0.2.0"
+]
+
+[project.scripts]
+server = "server.environment:app"
