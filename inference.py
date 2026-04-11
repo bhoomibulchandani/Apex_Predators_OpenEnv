@@ -11,14 +11,19 @@ client = OpenAI(
 model_name = os.getenv("MODEL_NAME", "gpt-4o")
 
 def run_inference():
-    env = ApexDataCleanerEnv("data/task_easy.csv")
-    obs = env.reset()
+    # The 3 tasks from our YAML
+    task_ids = ["task_easy", "task_medium", "task_hard"]
     
-    print(f"[START] task=clean_easy_csv env=ApexCleaner model={model_name}")
-    
-    step_num = 0
-    done = False
-    reward_history = []
+    for task_id in task_ids:
+       
+        env = ApexDataCleanerEnv("data/task_easy.csv")
+        obs = env.reset()
+        
+        print(f"[START] task={task_id} env=ApexCleaner model={model_name}")
+        
+        step_num = 0
+        done = False
+        reward_history = []
     
     while not done and step_num < 10:
         step_num += 1
