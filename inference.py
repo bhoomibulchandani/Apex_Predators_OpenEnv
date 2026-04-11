@@ -11,12 +11,12 @@ client = OpenAI(
 model_name = os.getenv("MODEL_NAME", "gpt-4o")
 
 def run_inference():
-    # The 3 tasks from our YAML
-    task_ids = ["task_easy", "task_medium", "task_hard"]
-    
-    for task_id in task_ids:
-       
-        env = ApexDataCleanerEnv("data/task_easy.csv")
+   
+   
+   task_ids = ["task_easy", "task_medium", "task_hard"]
+   for task_id in task_ids:
+        csv_file = f"data/{task_id}.csv" 
+        env = ApexDataCleanerEnv(csv_file)
         obs = env.reset()
         
         print(f"[START] task={task_id} env=ApexCleaner model={model_name}")
@@ -25,7 +25,7 @@ def run_inference():
         done = False
         reward_history = []
     
-    while not done and step_num < 10:
+   while not done and step_num < 10:
         step_num += 1
         prompt = f"Dataset state: {obs}. Output JSON with 'column' and 'operation' (fillna_mean, drop_nulls, drop_column)."
         
@@ -47,8 +47,7 @@ def run_inference():
         action_log = action_str.replace('\n', '').replace(' ', '')
         print(f"[STEP] step={step_num} action={action_log} reward={reward} done={str(done).lower()} error={error_msg}")
 
-    rewards_str = ",".join([f"{r}" for r in reward_history])
-    print(f"[END] success={str(done).lower()} steps={step_num} rewards={rewards_str}")
-
+   rewards_str = ",".join([f"{r}" for r in reward_history])
+   print(f"[END] task={task_id} success={str(done).lower()} steps={step_num} rewards={rewards_str}")
 if __name__ == "__main__":
     run_inference()

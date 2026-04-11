@@ -3,14 +3,11 @@ version: "1.0.0"
 description: "Data cleaning environment for OpenEnv Hackathon"
 tasks:
   - id: task_easy
-    name: "Easy Cleaning"
-    description: "Basic null value imputation"
     grader: "server.environment:dynamic_grader"
+    score_range: [0.0, 1.0]
   - id: task_medium
-    name: "Medium Cleaning"
-    description: "Advanced feature dropping"
     grader: "server.environment:dynamic_grader"
+    score_range: [0.0, 1.0]
   - id: task_hard
-    name: "Hard Cleaning"
-    description: "Complex dataset cleaning"
     grader: "server.environment:dynamic_grader"
+    score_range: [0.0, 1.0]
