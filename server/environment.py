@@ -84,4 +84,3 @@ class ApexDataCleanerEnv:
                 pass 
         reward = max(0.01, min(0.99, reward))
         return self._get_obs(reward=reward, done=done, error=error_msg)
-        return self._get_obs(reward=reward, done=done, error=error_msg)
