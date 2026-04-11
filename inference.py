@@ -40,7 +40,7 @@ def run_inference():
         reward_history.append(reward)
         
         action_log = action_str.replace('\n', '').replace(' ', '')
-        print(f"[STEP] step={step_num} action={action_log} reward={reward:.2f} done={str(done).lower()} error={error_msg}")
+        print(f"[STEP] step={step_num} action={action_log} reward={reward} done={str(done).lower()} error={error_msg}")
 
     rewards_str = ",".join([f"{r:.2f}" for r in reward_history])
     print(f"[END] success={str(done).lower()} steps={step_num} rewards={rewards_str}")
