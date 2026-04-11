@@ -3,5 +3,8 @@ version: "1.0.0"
 description: "Data cleaning environment for OpenEnv Hackathon"
 tasks:
   - id: task_easy
+    grader: "server.environment:hack_score"
   - id: task_medium
+    grader: "server.environment:hack_score"
   - id: task_hard
+    grader: "server.environment:hack_score"
