@@ -42,7 +42,7 @@ def run_inference():
         action_log = action_str.replace('\n', '').replace(' ', '')
         print(f"[STEP] step={step_num} action={action_log} reward={reward} done={str(done).lower()} error={error_msg}")
 
-    rewards_str = ",".join([f"{r:.2f}" for r in reward_history])
+    rewards_str = ",".join([f"{r}" for r in reward_history])
     print(f"[END] success={str(done).lower()} steps={step_num} rewards={rewards_str}")
 
 if __name__ == "__main__":
