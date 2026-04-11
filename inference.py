@@ -27,9 +27,8 @@ def run_inference():
             action_dict = {"column": "none", "operation": "error"} 
             
             obs, reward, done, error_msg = env.step(action_dict)
-            
-            # The Discord Rule
-            safe_reward = max(0.01, min(0.99, float(reward)))
+            raw_reward = reward[0] if isinstance(reward, tuple) else reward
+            safe_reward = max(0.01, min(0.99, float(raw_reward)))
             reward_history.append(safe_reward)
             step_num += 1
             
