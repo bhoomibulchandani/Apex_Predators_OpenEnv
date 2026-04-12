@@ -14,25 +14,31 @@ def run_inference():
     task_ids = ["task_easy", "task_medium", "task_hard"]
     
     for task_id in task_ids:
-        # Dynamically load your 3 unique CSVs
         env = ApexDataCleanerEnv(f"data/{task_id}.csv")
         obs = env.reset()
+        
+        # 1. THE MISSING START LOG: Tells the robot a task is beginning
+        print(f"[START] task={task_id} env=ApexCleaner model={model_name}")
         
         done = False
         step_num = 0
         reward_history = []
         
         while not done and step_num < 10:
-            # Your action logic
-            action_dict = {"column": "none", "operation": "error"} 
+            action_dict = {"column": "none", "operation": "error"}
             
             obs, reward, done, error_msg = env.step(action_dict)
+            
+            # The Tuple Stripper & Discord Clamp
             raw_reward = reward[0] if isinstance(reward, tuple) else reward
             safe_reward = max(0.01, min(0.99, float(raw_reward)))
             reward_history.append(safe_reward)
+            
+            # 2. THE MISSING STEP LOG: Tells the robot what action you took
+            action_log = str(action_dict).replace('\n', '').replace(' ', '')
+            print(f"[STEP] step={step_num} action={action_log} reward={safe_reward} done={str(done).lower()} error={error_msg}")
+            
             step_num += 1
             
         rewards_str = ",".join([f"{r}" for r in reward_history])
         print(f"[END] task={task_id} success={str(done).lower()} steps={step_num} rewards={rewards_str}")
-if __name__ == "__main__":
-    run_inference()
