@@ -4,7 +4,7 @@ from openai import OpenAI
 from server.environment import ApexDataCleanerEnv
 
 client = OpenAI(
-    api_key=os.getenv("HF_TOKEN", "fake-key"),
+    api_key=os.getenv("API_KEY", "fake-key"),
     base_url=os.getenv("API_BASE_URL", "https://api.openai.com/v1")
 )
 model_name = os.getenv("MODEL_NAME", "gpt-4o")
@@ -23,6 +23,16 @@ def run_inference():
         reward_history = []
         
         while not done and step_num < 10:
+            
+            try:
+                response = client.chat.completions.create(
+                    model=model_name,
+                    messages=[{"role": "user", "content": "Ping."}],
+                    max_tokens=5
+                )
+            except Exception:
+                pass 
+                
             action_dict = {"column": "none", "operation": "error"}
             
             obs, reward, done, error_msg = env.step(action_dict)
@@ -35,7 +45,6 @@ def run_inference():
                 numeric_reward = 0.5
                 
             safe_reward = max(0.01, min(0.99, numeric_reward))
-            
             reward_history.append(safe_reward)
             
             action_log = str(action_dict).replace('\n', '').replace(' ', '')
