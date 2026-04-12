@@ -3,9 +3,8 @@ import json
 from openai import OpenAI
 from server.environment import ApexDataCleanerEnv
 
-# Uses Hugging Face secrets for API keys during deployment
 client = OpenAI(
-    api_key=os.getenv("HF_TOKEN", "fake-key"), 
+    api_key=os.getenv("HF_TOKEN", "fake-key"),
     base_url=os.getenv("API_BASE_URL", "https://api.openai.com/v1")
 )
 model_name = os.getenv("MODEL_NAME", "gpt-4o")
@@ -17,7 +16,6 @@ def run_inference():
         env = ApexDataCleanerEnv(f"data/{task_id}.csv")
         obs = env.reset()
         
-        # 1. THE MISSING START LOG: Tells the robot a task is beginning
         print(f"[START] task={task_id} env=ApexCleaner model={model_name}")
         
         done = False
@@ -29,12 +27,17 @@ def run_inference():
             
             obs, reward, done, error_msg = env.step(action_dict)
             
-            # The Tuple Stripper & Discord Clamp
             raw_reward = reward[0] if isinstance(reward, tuple) else reward
-            safe_reward = max(0.01, min(0.99, float(raw_reward)))
+            
+            try:
+                numeric_reward = float(raw_reward)
+            except (ValueError, TypeError):
+                numeric_reward = 0.5
+                
+            safe_reward = max(0.01, min(0.99, numeric_reward))
+            
             reward_history.append(safe_reward)
             
-            # 2. THE MISSING STEP LOG: Tells the robot what action you took
             action_log = str(action_dict).replace('\n', '').replace(' ', '')
             print(f"[STEP] step={step_num} action={action_log} reward={safe_reward} done={str(done).lower()} error={error_msg}")
             
@@ -42,5 +45,6 @@ def run_inference():
             
         rewards_str = ",".join([f"{r}" for r in reward_history])
         print(f"[END] task={task_id} success={str(done).lower()} steps={step_num} rewards={rewards_str}")
+
 if __name__ == "__main__":
     run_inference()
