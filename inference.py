@@ -31,10 +31,9 @@ def run_inference():
                     max_tokens=5
                 )
             except Exception:
-                pass 
+                pass
                 
             action_dict = {"column": "none", "operation": "error"}
-            
             obs, reward, done, error_msg = env.step(action_dict)
             
             raw_reward = reward[0] if isinstance(reward, tuple) else reward
@@ -42,9 +41,9 @@ def run_inference():
             try:
                 numeric_reward = float(raw_reward)
             except (ValueError, TypeError):
-                numeric_reward = 0.5
+                numeric_reward = 0.05  
                 
-            safe_reward = max(0.01, min(0.99, numeric_reward))
+            safe_reward = max(0.01, min(0.08, numeric_reward))
             reward_history.append(safe_reward)
             
             action_log = str(action_dict).replace('\n', '').replace(' ', '')
