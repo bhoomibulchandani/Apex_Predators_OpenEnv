@@ -42,3 +42,5 @@ def run_inference():
             
         rewards_str = ",".join([f"{r}" for r in reward_history])
         print(f"[END] task={task_id} success={str(done).lower()} steps={step_num} rewards={rewards_str}")
+if __name__ == "__main__":
+    run_inference()
