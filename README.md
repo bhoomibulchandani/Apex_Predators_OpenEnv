@@ -11,6 +11,7 @@ An OpenEnv reinforcement learning environment that trains AI agents to autonomou
 * **Autonomous Cleaning:** Handles missing values and outliers.
 * **Multi-Mode Deployment:** Fully compatible with `uv` and `openenv-core`.
 * **Dockerized:** Optimized for high-speed training on Hugging Face Spaces.
+```
 +----------------------+         +-------------------+         +----------------------+
 |                      |  PING   |                   |   API   |                      |
 |    inference.py      | ------> |   LiteLLM Proxy   | ------> |    Meta / OpenAI     |
@@ -43,4 +44,4 @@ An OpenEnv reinforcement learning environment that trains AI agents to autonomou
 |  > [START] task_x    |
 |  > [STEP] action_y   |
 |  > [END] score_z     |
-+----------------------+
++----------------------+```
